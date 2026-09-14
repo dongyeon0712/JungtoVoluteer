@@ -1,0 +1,718 @@
+<!doctype html>
+<title>UTKSA 봉사자 체크리스트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<style>
+  :root {
+    --cream: #faf9f4;
+    --paper: #ffffff;
+    --green-900: #33422e;
+    --green-700: #5b6f52;
+    --green-600: #6d8362;
+    --sage-300: #c7d6ba;
+    --sage-150: #e4ecda;
+    --sage-100: #eef2e7;
+    --ink: #1c1c1a;
+    --ink-soft: #57564e;
+    --gold-600: #b9791f;
+    --gold-500: #d99a2b;
+    --gold-100: #f6e6c4;
+    --line: #ded9c9;
+    --focus: #2f6fed;
+    --tab-bg: #eef1e6;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .app {
+    max-width: 560px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--cream);
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--green-700);
+    padding-top: env(safe-area-inset-top);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  }
+
+  .topbar-inner {
+    padding: 14px 20px 12px;
+  }
+
+  .brand {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--sage-300);
+    text-transform: uppercase;
+  }
+
+  .topbar h1 {
+    margin: 3px 0 10px;
+    font-family: "Black Han Sans", "Noto Sans KR", sans-serif;
+    font-size: 24px;
+    line-height: 1.15;
+    color: #fff;
+    text-wrap: balance;
+  }
+
+  .overall {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .overall-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--sage-300);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .overall-track {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    overflow: hidden;
+  }
+
+  .overall-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: var(--gold-500);
+    transition: width 0.25s ease;
+  }
+
+  /* ---------- Tabs ---------- */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 0 12px 10px;
+  }
+
+  .tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 4px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--sage-300);
+    font-family: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tab[aria-selected="true"] {
+    background: #fff;
+    color: var(--green-900);
+  }
+
+  .tab-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .tab-badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--sage-300);
+  }
+
+  .tab[aria-selected="true"] .tab-badge { color: var(--green-600); }
+
+  .tab-badge.done {
+    color: var(--green-900);
+  }
+
+  .tab:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  /* ---------- Content ---------- */
+  main {
+    flex: 1;
+    padding: 20px 20px 48px;
+  }
+
+  .panel-intro {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    line-height: 1.55;
+  }
+
+  .panel-intro strong { color: var(--green-900); }
+
+  .section {
+    margin-bottom: 26px;
+  }
+
+  .section-head {
+    background: var(--sage-150);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--green-900);
+    text-wrap: balance;
+  }
+
+  .section-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green-700);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .section-bar {
+    height: 3px;
+    border-radius: 999px;
+    background: var(--line);
+    margin: 0 2px 14px;
+    overflow: hidden;
+  }
+
+  .section-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--green-600);
+    border-radius: 999px;
+    transition: width 0.25s ease;
+  }
+
+  .items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .example {
+    margin: 0 0 14px;
+  }
+
+  .example img {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+
+  .example figcaption {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    margin-top: 6px;
+  }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+
+  .item.important {
+    background: var(--gold-100);
+    border-color: #e6c785;
+  }
+
+  .item input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  .box {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    border-radius: 6px;
+    border: 1.8px solid var(--green-600);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .item.important .box { border-color: var(--gold-600); }
+
+  .box svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.12s ease, transform 0.12s ease;
+  }
+
+  .item input:checked + .box {
+    background: var(--green-700);
+    border-color: var(--green-700);
+  }
+
+  .item.important input:checked + .box {
+    background: var(--gold-600);
+    border-color: var(--gold-600);
+  }
+
+  .item input:checked + .box svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .item input:focus-visible + .box {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .txt {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .item input:checked ~ .txt {
+    color: var(--ink-soft);
+    text-decoration: line-through;
+    text-decoration-color: var(--line);
+  }
+
+  .reset-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .reset-btn {
+    border: none;
+    background: none;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    font-family: inherit;
+    text-decoration: underline;
+    padding: 8px 10px;
+    cursor: pointer;
+  }
+
+  /* ---------- Common tab ---------- */
+  .rule-box {
+    background: var(--sage-150);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 24px;
+  }
+
+  .rule-eyebrow {
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--green-700);
+    letter-spacing: 0.02em;
+    margin: 0 0 4px;
+  }
+
+  .rule-body {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.5;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .timeline-heading {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--green-900);
+    margin: 0 0 12px;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .trow {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 4px 0;
+  }
+
+  .trow.important {
+    background: var(--gold-100);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .ttime {
+    flex: none;
+    min-width: 66px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    color: var(--green-900);
+    background: var(--sage-300);
+    border-radius: 6px;
+    padding: 4px 6px;
+  }
+
+  .trow.important .ttime {
+    background: var(--gold-500);
+    color: var(--green-900);
+  }
+
+  .ttext {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding-top: 3px;
+  }
+
+  .trow.important .ttext { font-weight: 700; }
+
+  footer.credit {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    padding: 6px 20px 28px;
+  }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overall-fill, .section-bar-fill, .box svg { transition: none; }
+  }
+</style>
+
+<div class="app">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">9.15 (화) 법륜스님 강연</span>
+      <h1>봉사자 체크리스트</h1>
+      <div class="overall">
+        <span class="overall-label" id="overall-label">0/0 완료</span>
+        <div class="overall-track"><div class="overall-fill" id="overall-fill"></div></div>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="봉사자 그룹">
+      <button class="tab" role="tab" data-target="g1" aria-selected="true">
+        <span class="tab-label">질문자안내</span>
+        <span class="tab-badge" data-badge-for="g1">0/0</span>
+      </button>
+      <button class="tab" role="tab" data-target="g2" aria-selected="false">
+        <span class="tab-label">진행팀</span>
+        <span class="tab-badge" data-badge-for="g2">0/0</span>
+      </button>
+      <button class="tab" role="tab" data-target="g3" aria-selected="false">
+        <span class="tab-label">지원팀</span>
+        <span class="tab-badge" data-badge-for="g3">0/0</span>
+      </button>
+      <button class="tab" role="tab" data-target="common" aria-selected="false">
+        <span class="tab-label">Common Info</span>
+        <span class="tab-badge">&nbsp;</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Group 1 -->
+    <section class="panel" id="panel-g1" data-group="g1">
+      <p class="panel-intro"><strong>Serina · Ethan · 유서진 · 이두라</strong> — 네 분이 서로 진행 내용을 알고 있어야 합니다.</p>
+
+      <div class="section" data-section="g1-se">
+        <div class="section-head">
+          <span class="section-title">Serina · Ethan — 질문자 응대</span>
+          <span class="section-count" data-count-for="g1-se">0/9</span>
+        </div>
+        <div class="section-bar"><div class="section-bar-fill" data-bar-for="g1-se"></div></div>
+        <figure class="example">
+          <img src="serina-form-example.jpg" alt="Example filled form: '학생' written top right for student, next to the name written in Korean (다니엘 for Daniel)">
+          <figcaption>예시 — 오른쪽 상단에 학생이면 '학생'이라고 적고, 이름은 한글로 함께 적어주세요 (예: Daniel → 다니엘)</figcaption>
+        </figure>
+        <div class="items">
+          <label class="item" data-id="g1-se-1"><input type="checkbox" id="g1-se-1"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">① 질문자가 학생인지 아닌지 확인해주세요</span></label>
+          <label class="item" data-id="g1-se-2"><input type="checkbox" id="g1-se-2"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">② 학교 정책상, 정치·종교 관련 질문은 하지 않도록 안내해주세요</span></label>
+          <label class="item" data-id="g1-se-3"><input type="checkbox" id="g1-se-3"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">③ Consent form 오른쪽 상단에 학생이면 '학생'이라고 표시해주세요</span></label>
+          <label class="item" data-id="g1-se-4"><input type="checkbox" id="g1-se-4"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">④ 작성 완료된 이름은 한글로 옮겨 적어주세요 (예: Amy → 에이미) — 스님이 읽으실 수 있도록</span></label>
+          <label class="item important" data-id="g1-se-5"><input type="checkbox" id="g1-se-5"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">⑤ [중요 · 오후 3:45] 작성된 폼을 법해법사님 또는 Daniel에게 전달 — 3개 질문 우선순위 선정</span></label>
+          <label class="item" data-id="g1-se-6"><input type="checkbox" id="g1-se-6"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">⑥ 3개 질문 답변이 끝나면 손 든 청중을 기록해주세요</span></label>
+          <label class="item" data-id="g1-se-7"><input type="checkbox" id="g1-se-7"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">⑦ 행사 종료 시, 손 든 분들께 consent form 작성을 요청해주세요</span></label>
+          <label class="item" data-id="g1-se-8"><input type="checkbox" id="g1-se-8"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">⑧ 선정된 3개 질문은 스님 테이블 위에 올려주세요</span></label>
+          <label class="item" data-id="g1-se-9"><input type="checkbox" id="g1-se-9"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">⑨ 동의(consent)하지 않는 분이 있으면 법사님께 안내해주세요</span></label>
+        </div>
+      </div>
+
+      <div class="section" data-section="g1-yu">
+        <div class="section-head">
+          <span class="section-title">유서진 — 안내 표시</span>
+          <span class="section-count" data-count-for="g1-yu">0/2</span>
+        </div>
+        <div class="section-bar"><div class="section-bar-fill" data-bar-for="g1-yu"></div></div>
+        <div class="items">
+          <label class="item" data-id="g1-yu-1"><input type="checkbox" id="g1-yu-1"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">① 질문자 표기 자리에 블루 테이프를 붙여주세요</span></label>
+          <label class="item" data-id="g1-yu-2"><input type="checkbox" id="g1-yu-2"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">② Privacy notice paper를 클래스룸 양옆·뒤쪽에 붙여주세요</span></label>
+        </div>
+      </div>
+
+      <div class="section" data-section="g1-fd">
+        <div class="section-head">
+          <span class="section-title">이두라 · 유서진 — 폼 전달</span>
+          <span class="section-count" data-count-for="g1-fd">0/3</span>
+        </div>
+        <div class="section-bar"><div class="section-bar-fill" data-bar-for="g1-fd"></div></div>
+        <div class="items">
+          <label class="item" data-id="g1-fd-1"><input type="checkbox" id="g1-fd-1"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">① 타임코드를 기록해주세요</span></label>
+          <label class="item" data-id="g1-fd-2"><input type="checkbox" id="g1-fd-2"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">② 작성이 끝난 폼은 먼저 Daniel에게 보내주세요</span></label>
+          <label class="item" data-id="g1-fd-3"><input type="checkbox" id="g1-fd-3"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">③ Daniel이 성함 확인 및 personal info 사용 동의 여부(Yes/No)를 체크한 후 전달합니다</span></label>
+        </div>
+      </div>
+
+      <div class="reset-row"><button class="reset-btn" data-reset="g1">이 탭 체크 초기화</button></div>
+    </section>
+
+    <!-- Group 2 -->
+    <section class="panel" id="panel-g2" data-group="g2" hidden>
+      <p class="panel-intro"><strong>정수진 · Younnie · Tam</strong> — 세 분이 마이크 전달 흐름을 서로 알고 있어야 합니다.</p>
+
+      <div class="section" data-section="g2-js">
+        <div class="section-head">
+          <span class="section-title"> 정수진 —질문자 마이크 (왼쪽)</span>
+          <span class="section-count" data-count-for="g2-js">0/5</span>
+        </div>
+        <div class="section-bar"><div class="section-bar-fill" data-bar-for="g2-js"></div></div>
+        <div class="items">
+          <label class="item" data-id="g2-js-1"><input type="checkbox" id="g2-js-1"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">① 현장에서 접수된 질문 3개까지만 진행하고 (나머지는 현장에서 손들고 받습니다)</span></label>
+          <label class="item" data-id="g2-js-2"><input type="checkbox" id="g2-js-2"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">② 3번째 질문이 끝나면 MC(Tam)에게 마이크를 전달받아주세요</span></label>
+          <label class="item" data-id="g2-js-3"><input type="checkbox" id="g2-js-3"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">③ 전달받은 마이크를 손 든 분들께 전달해주세요 (Left side)</span></label>
+          <label class="item" data-id="g2-js-4"><input type="checkbox" id="g2-js-4"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">④ 스님께서 마치자고 하시면 마이크를 다시 MC에게 전달해주세요</span></label>
+          <label class="item" data-id="g2-js-5"><input type="checkbox" id="g2-js-5"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">⑤ 마이크를 사용하지 않을 때는 꺼두세요</span></label>
+        </div>
+      </div>
+
+      <div class="section" data-section="g2-yn">
+        <div class="section-head">
+          <span class="section-title">Younnie — 질문자 마이크 (오른쪽)</span>
+          <span class="section-count" data-count-for="g2-yn">0/1</span>
+        </div>
+        <div class="section-bar"><div class="section-bar-fill" data-bar-for="g2-yn"></div></div>
+        <div class="items">
+          <label class="item" data-id="g2-yn-1"><input type="checkbox" id="g2-yn-1"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">① 현장에서 접수된 3분의 질문자에게 마이크를 전달해주세요</span></label>
+          <label class="item" data-id="g2-yn-1"><input type="checkbox" id="g2-yn-1"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">② 3분의 질문이 끝나고 손 든 분들께 마이크를 전달해주세요 (Right side)</span></label>
+          <label class="item" data-id="g2-js-5"><input type="checkbox" id="g2-js-5"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">③ 마이크를 사용하지 않을 때는 꺼두세요</span></label>
+        </div>
+      </div>
+
+      <div class="section" data-section="g2-tam">
+        <div class="section-head">
+          <span class="section-title">Tam — MC</span>
+          <span class="section-count" data-count-for="g2-tam">0/2</span>
+        </div>
+        <div class="section-bar"><div class="section-bar-fill" data-bar-for="g2-tam"></div></div>
+        <div class="items">
+          <label class="item important" data-id="g2-tam-1"><input type="checkbox" id="g2-tam-1"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">① [Important · 3:55 PM] Pre-announcement — remind the audience of etiquette and announce the 4pm start</span></label>
+          <label class="item important" data-id="g2-tam-2"><input type="checkbox" id="g2-tam-2"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">② [Important · 4:00 PM] Introduce Sunim and welcome interpreter Jiseon to the floor</span></label>
+        </div>
+      </div>
+
+      <div class="reset-row"><button class="reset-btn" data-reset="g2">이 탭 체크 초기화</button></div>
+    </section>
+
+    <!-- Group 3 -->
+    <section class="panel" id="panel-g3" data-group="g3" hidden>
+      <p class="panel-intro"><strong>지원팀</strong> — 현장 준비 담당</p>
+
+      <div class="section" data-section="g3-bj">
+        <div class="section-head">
+          <span class="section-title">방정헌 거사님 — 현장 준비</span>
+          <span class="section-count" data-count-for="g3-bj">0/2</span>
+        </div>
+        <div class="section-bar"><div class="section-bar-fill" data-bar-for="g3-bj"></div></div>
+        <div class="items">
+          <label class="item" data-id="g3-bj-1"><input type="checkbox" id="g3-bj-1"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">① 테이블 배너를 배치해주세요 (Blue tape 만 사용가능)</span></label>
+          <label class="item" data-id="g3-bj-2"><input type="checkbox" id="g3-bj-2"><span class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="txt">② 참석 인원 수를 카운트해주세요</span></label>
+        </div>
+      </div>
+
+      <div class="reset-row"><button class="reset-btn" data-reset="g3">이 탭 체크 초기화</button></div>
+    </section>
+
+    <!-- Common -->
+    <section class="panel" id="panel-common" data-group="common" hidden>
+      <div class="rule-box">
+        <p class="rule-eyebrow">House Rule (Conference Center Policy)</p>
+        <p class="rule-body">Due to the school policy, no political or religious questions will be taken from anyone.</p>
+      </div>
+
+      <h2 class="timeline-heading">Day-of Timeline</h2>
+      <div class="timeline">
+        <div class="trow"><span class="ttime">2:30</span><span class="ttext">All volunteers arrive</span></div>
+        <div class="trow important"><span class="ttime">3:45</span><span class="ttext">Serina/Ethan hand question forms to Beophae Beopsanim / Daniel</span></div>
+        <div class="trow important"><span class="ttime">3:55</span><span class="ttext">Tam's pre-announcement (etiquette + 4pm start)</span></div>
+        <div class="trow important"><span class="ttime">4:00</span><span class="ttext">Event starts — introduce Sunim</span></div>
+        <div class="trow"><span class="ttime">4–6</span><span class="ttext">Main talk (Q&amp;A / 즉문즉설)</span></div>
+        <div class="trow"><span class="ttime">5:30–6:00</span><span class="ttext">Volunteer group photo with 법륜스님, gifting time to UTKSA</span></div>
+        <div class="trow"><span class="ttime">6:00–7:00</span><span class="ttext">Clean-up &amp; debrief (Beophae Beopsanim)</span></div>
+        <div class="trow"><span class="ttime">7:00~</span><span class="ttext">Kimbap</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="credit">체크 상태는 이 기기에만 저장됩니다 · UTKSA 9.15 행사</footer>
+</div>
+
+<script>
+  (function () {
+    var STORAGE_KEY = "utksa-checklist-v1";
+    var TAB_KEY = "utksa-checklist-tab";
+    var state = {};
+
+    try {
+      state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    } catch (e) { state = {}; }
+
+    function save() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+    }
+
+    var checkboxes = Array.prototype.slice.call(document.querySelectorAll('.item input[type="checkbox"]'));
+
+    checkboxes.forEach(function (cb) {
+      var id = cb.id;
+      if (state[id]) cb.checked = true;
+      cb.addEventListener("change", function () {
+        state[id] = cb.checked;
+        save();
+        updateAll();
+      });
+    });
+
+    function updateAll() {
+      // per-section counts
+      document.querySelectorAll(".section").forEach(function (sec) {
+        var key = sec.getAttribute("data-section");
+        var boxes = sec.querySelectorAll('input[type="checkbox"]');
+        var total = boxes.length;
+        var done = Array.prototype.filter.call(boxes, function (b) { return b.checked; }).length;
+        var countEl = document.querySelector('[data-count-for="' + key + '"]');
+        var barEl = document.querySelector('[data-bar-for="' + key + '"]');
+        if (countEl) countEl.textContent = done + "/" + total;
+        if (barEl) barEl.style.width = (total ? (done / total * 100) : 0) + "%";
+      });
+
+      // per-tab (group) badges
+      ["g1", "g2", "g3"].forEach(function (g) {
+        var boxes = document.querySelectorAll('#panel-' + g + ' input[type="checkbox"]');
+        var total = boxes.length;
+        var done = Array.prototype.filter.call(boxes, function (b) { return b.checked; }).length;
+        var badge = document.querySelector('[data-badge-for="' + g + '"]');
+        if (badge) {
+          badge.textContent = done + "/" + total;
+          badge.classList.toggle("done", total > 0 && done === total);
+        }
+      });
+
+      // overall
+      var total = checkboxes.length;
+      var done = checkboxes.filter(function (b) { return b.checked; }).length;
+      document.getElementById("overall-label").textContent = done + "/" + total + " 완료";
+      document.getElementById("overall-fill").style.width = (total ? (done / total * 100) : 0) + "%";
+    }
+
+    // Tabs
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+    var panels = {
+      g1: document.getElementById("panel-g1"),
+      g2: document.getElementById("panel-g2"),
+      g3: document.getElementById("panel-g3"),
+      common: document.getElementById("panel-common")
+    };
+
+    function selectTab(target) {
+      tabs.forEach(function (t) {
+        var active = t.getAttribute("data-target") === target;
+        t.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      Object.keys(panels).forEach(function (k) {
+        panels[k].hidden = k !== target;
+      });
+      try { localStorage.setItem(TAB_KEY, target); } catch (e) {}
+      if (history.replaceState) history.replaceState(null, "", "#" + target);
+    }
+
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        selectTab(t.getAttribute("data-target"));
+      });
+    });
+
+    // Reset buttons
+    document.querySelectorAll("[data-reset]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var g = btn.getAttribute("data-reset");
+        if (!window.confirm("이 탭의 체크를 모두 초기화할까요?")) return;
+        document.querySelectorAll('#panel-' + g + ' input[type="checkbox"]').forEach(function (cb) {
+          cb.checked = false;
+          state[cb.id] = false;
+        });
+        save();
+        updateAll();
+      });
+    });
+
+    // Initial tab: URL hash > saved tab > default
+    var initial = "g1";
+    var hash = (location.hash || "").replace("#", "");
+    var saved = null;
+    try { saved = localStorage.getItem(TAB_KEY); } catch (e) {}
+    if (panels[hash]) initial = hash;
+    else if (panels[saved]) initial = saved;
+    selectTab(initial);
+
+    updateAll();
+  })();
+</script>
